@@ -208,11 +208,57 @@ await executePayment(serviceProviderAddress, 'unique-request-id');
 - [x] Agent wallet management UI
 - [x] Service marketplace
 - [x] Provider registration
-- [ ] Deploy contracts to testnet/mainnet
-- [ ] Agent SDK for easy integration
-- [ ] Payment webhooks for providers
-- [ ] Multi-chain support (L2s)
-- [ ] Agent analytics dashboard
+- [x] Deploy contracts to testnet/mainnet (Hardhat setup complete)
+- [x] Agent SDK for easy integration (`/sdk` package)
+- [x] Payment webhooks for providers (`/api/webhooks`)
+- [x] Multi-chain support (Base, Arbitrum, Optimism, Polygon)
+- [x] Agent analytics dashboard (`/analytics` page)
+
+## 🚀 Deployment
+
+### Deploy Smart Contracts
+
+```bash
+# Install dependencies
+npm install
+
+# Compile contracts
+npm run compile
+
+# Deploy to testnet (Sepolia)
+npm run deploy:sepolia
+
+# Deploy to mainnet
+npm run deploy:mainnet
+
+# Deploy to L2s
+npm run deploy:base
+npm run deploy:arbitrum
+npm run deploy:optimism
+npm run deploy:polygon
+```
+
+### Using the SDK
+
+```bash
+# Install SDK in your project
+npm install @agentpay/sdk
+
+# For AI Agents
+import { AgentPayClient } from '@agentpay/sdk';
+
+const client = new AgentPayClient({
+  privateKey: process.env.AGENT_PRIVATE_KEY,
+  chain: 'base', // or 'mainnet', 'arbitrum', etc.
+  rpcUrl: process.env.RPC_URL,
+});
+
+// Execute payment
+await client.executePayment({
+  serviceProvider: '0x...',
+  requestId: 'unique-id',
+});
+```
 
 ## 🤝 Contributing
 

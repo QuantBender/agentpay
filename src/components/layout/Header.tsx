@@ -10,6 +10,7 @@ const navItems = [
   { href: '/agents', label: 'My Agents', icon: '🤖' },
   { href: '/marketplace', label: 'Services', icon: '🔌' },
   { href: '/provider', label: 'Become Provider', icon: '💼' },
+  { href: '/analytics', label: 'Analytics', icon: '📈' },
 ];
 
 export function Header() {

@@ -1,0 +1,48 @@
+{
+  "name": "@agentpay/sdk",
+  "version": "1.0.0",
+  "description": "SDK for integrating AI agents with AgentPay payment system",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "payments",
+    "mnee",
+    "stablecoin",
+    "ethereum",
+    "web3"
+  ],
+  "author": "AgentPay",
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.43.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {
+    "viem": "^2.0.0"
+  }
+}
