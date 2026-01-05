@@ -1,0 +1,331 @@
+// AgentPayEscrow ABI - Generated from Solidity contract
+export const AGENT_PAY_ESCROW_ABI = [
+  // Constructor
+  {
+    inputs: [{ internalType: 'address', name: '_mneeToken', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  // Errors
+  { inputs: [], name: 'AgentAlreadyExists', type: 'error' },
+  { inputs: [], name: 'AgentNotActive', type: 'error' },
+  { inputs: [], name: 'AgentNotFound', type: 'error' },
+  { inputs: [], name: 'AgentNotOwner', type: 'error' },
+  { inputs: [], name: 'DailyLimitExceeded', type: 'error' },
+  { inputs: [], name: 'InsufficientAgentBalance', type: 'error' },
+  { inputs: [], name: 'InvalidAmount', type: 'error' },
+  { inputs: [], name: 'ServiceNotActive', type: 'error' },
+  { inputs: [], name: 'ServiceNotFound', type: 'error' },
+  { inputs: [], name: 'TransferFailed', type: 'error' },
+  // Events
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
+      { indexed: false, internalType: 'string', name: 'agentId', type: 'string' },
+    ],
+    name: 'AgentCreated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'AgentFunded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'AgentWithdrawn',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'newLimit', type: 'uint256' },
+    ],
+    name: 'AgentLimitUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'AgentDeactivated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: true, internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'AgentActivated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'provider', type: 'address' },
+      { indexed: false, internalType: 'string', name: 'serviceId', type: 'string' },
+      { indexed: false, internalType: 'uint256', name: 'pricePerCall', type: 'uint256' },
+    ],
+    name: 'ServiceProviderRegistered',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'provider', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'newPrice', type: 'uint256' },
+    ],
+    name: 'ServiceProviderUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: true, internalType: 'address', name: 'provider', type: 'address' }],
+    name: 'ServiceProviderDeactivated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'bytes32', name: 'paymentId', type: 'bytes32' },
+      { indexed: true, internalType: 'address', name: 'agent', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'serviceProvider', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { indexed: false, internalType: 'string', name: 'serviceId', type: 'string' },
+    ],
+    name: 'PaymentExecuted',
+    type: 'event',
+  },
+  // Agent Management Functions
+  {
+    inputs: [
+      { internalType: 'address', name: 'agentAddress', type: 'address' },
+      { internalType: 'string', name: 'agentId', type: 'string' },
+      { internalType: 'uint256', name: 'dailyLimit', type: 'uint256' },
+    ],
+    name: 'createAgent',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'agentAddress', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'fundAgent',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'agentAddress', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'withdrawFromAgent',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'agentAddress', type: 'address' },
+      { internalType: 'uint256', name: 'newLimit', type: 'uint256' },
+    ],
+    name: 'updateAgentLimit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'deactivateAgent',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'activateAgent',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  // Service Provider Functions
+  {
+    inputs: [
+      { internalType: 'string', name: 'serviceId', type: 'string' },
+      { internalType: 'string', name: 'serviceName', type: 'string' },
+      { internalType: 'uint256', name: 'pricePerCall', type: 'uint256' },
+    ],
+    name: 'registerServiceProvider',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'newPrice', type: 'uint256' }],
+    name: 'updateServicePrice',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'deactivateService',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  // Payment Functions
+  {
+    inputs: [
+      { internalType: 'address', name: 'serviceProviderAddress', type: 'address' },
+      { internalType: 'bytes32', name: 'requestId', type: 'bytes32' },
+    ],
+    name: 'executePayment',
+    outputs: [{ internalType: 'bytes32', name: 'paymentId', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'serviceProviderAddress', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'bytes32', name: 'requestId', type: 'bytes32' },
+    ],
+    name: 'executeCustomPayment',
+    outputs: [{ internalType: 'bytes32', name: 'paymentId', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  // View Functions
+  {
+    inputs: [{ internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'getAgent',
+    outputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'owner', type: 'address' },
+          { internalType: 'uint256', name: 'balance', type: 'uint256' },
+          { internalType: 'uint256', name: 'dailyLimit', type: 'uint256' },
+          { internalType: 'uint256', name: 'spentToday', type: 'uint256' },
+          { internalType: 'uint256', name: 'periodStart', type: 'uint256' },
+          { internalType: 'bool', name: 'isActive', type: 'bool' },
+          { internalType: 'string', name: 'agentId', type: 'string' },
+        ],
+        internalType: 'struct AgentPayEscrow.Agent',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'providerAddress', type: 'address' }],
+    name: 'getServiceProvider',
+    outputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'paymentAddress', type: 'address' },
+          { internalType: 'uint256', name: 'pricePerCall', type: 'uint256' },
+          { internalType: 'string', name: 'serviceId', type: 'string' },
+          { internalType: 'string', name: 'serviceName', type: 'string' },
+          { internalType: 'bool', name: 'isActive', type: 'bool' },
+        ],
+        internalType: 'struct AgentPayEscrow.ServiceProvider',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
+    name: 'getOwnerAgents',
+    outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getServiceProviderCount',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getAllServiceProviders',
+    outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'agentAddress', type: 'address' }],
+    name: 'getAgentRemainingDailyLimit',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'mneeToken',
+    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'agents',
+    outputs: [
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'uint256', name: 'balance', type: 'uint256' },
+      { internalType: 'uint256', name: 'dailyLimit', type: 'uint256' },
+      { internalType: 'uint256', name: 'spentToday', type: 'uint256' },
+      { internalType: 'uint256', name: 'periodStart', type: 'uint256' },
+      { internalType: 'bool', name: 'isActive', type: 'bool' },
+      { internalType: 'string', name: 'agentId', type: 'string' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'serviceProviders',
+    outputs: [
+      { internalType: 'address', name: 'paymentAddress', type: 'address' },
+      { internalType: 'uint256', name: 'pricePerCall', type: 'uint256' },
+      { internalType: 'string', name: 'serviceId', type: 'string' },
+      { internalType: 'string', name: 'serviceName', type: 'string' },
+      { internalType: 'bool', name: 'isActive', type: 'bool' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    name: 'payments',
+    outputs: [
+      { internalType: 'address', name: 'agent', type: 'address' },
+      { internalType: 'address', name: 'serviceProvider', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'uint256', name: 'timestamp', type: 'uint256' },
+      { internalType: 'string', name: 'serviceId', type: 'string' },
+      { internalType: 'bytes32', name: 'requestId', type: 'bytes32' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const;
