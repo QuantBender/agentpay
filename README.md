@@ -70,7 +70,7 @@ Get a WalletConnect Project ID at [https://cloud.walletconnect.com](https://clou
 
 ## 📦 Project Structure
 
-\`\`\`
+```
 agentpay/
 ├── public/                     # Static assets
 │   ├── file.svg
@@ -116,7 +116,7 @@ agentpay/
 ├── postcss.config.mjs         # PostCSS configuration
 ├── tsconfig.json              # TypeScript configuration
 └── README.md                  # Project documentation
-\`\`\`
+```
 
 ## 🔐 Smart Contracts
 
