@@ -5,6 +5,9 @@ import { injected } from 'wagmi/connectors';
 // MNEE Stablecoin Contract Address on Ethereum
 export const MNEE_CONTRACT_ADDRESS = '0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF' as const;
 
+// Default escrow address (use chain-specific when available)
+export const AGENT_ESCROW_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
+
 // AgentPay Escrow Contract addresses per chain (to be deployed)
 export const ESCROW_ADDRESSES: Record<number, `0x${string}`> = {
   [mainnet.id]: '0x0000000000000000000000000000000000000000',
