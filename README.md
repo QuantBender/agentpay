@@ -7,6 +7,138 @@
 
 ---
 
+## 📖 About the Project
+
+### 💡 Inspiration
+
+The rise of autonomous AI agents—from GPT-4 powered assistants to fully autonomous research agents—creates a fundamental problem: **how do machines pay for services?**
+
+Today, AI agents can browse the web, write code, and make decisions, but they hit a wall when they need to pay for an API call, purchase data, or compensate another agent for work. We asked ourselves:
+
+> *What if AI agents could have their own wallets, budgets, and the ability to transact—all while their human owners maintain control?*
+
+The MNEE stablecoin, with its programmable money capabilities, provided the perfect foundation. We envisioned a future where:
+
+- An AI research agent pays $0.001 per API call automatically
+- Agent-to-agent commerce becomes seamless (Agent A pays Agent B for a completed task)
+- Humans set budgets and limits, but agents operate autonomously within those bounds
+
+This is the **agentic economy**—and AgentPay is the payment infrastructure to power it.
+
+### 🧠 What We Learned
+
+Building AgentPay taught us invaluable lessons across multiple domains:
+
+**1. Smart Contract Economics**
+
+Designing the escrow system required balancing security with flexibility. We learned that the optimal daily spending limit follows a decay function:
+
+$$L_{effective} = L_{max} \cdot e^{-\lambda \cdot t_{inactive}}$$
+
+Where $L_{max}$ is the maximum daily limit, $\lambda$ is the decay rate, and $t_{inactive}$ is time since last human interaction. This ensures dormant agents gradually lose spending power.
+
+**2. Web3 + Next.js Integration Challenges**
+
+SSR (Server-Side Rendering) and Web3 don't mix well. Wallet state exists only on the client, leading to hydration mismatches. We solved this with:
+- Lazy client-side mounting for wallet components
+- `useState` initialization for QueryClient to avoid SSR conflicts
+- Graceful degradation when no wallet is detected
+
+**3. Multi-Chain Complexity**
+
+Supporting 6 chains (Ethereum, Base, Arbitrum, Optimism, Polygon, Sepolia) meant managing:
+- Different RPC endpoints and latencies
+- Chain-specific contract addresses
+- Gas price variations (L2s are ~100x cheaper)
+
+**4. Agent UX is Different**
+
+Designing for AI agents as users is fundamentally different from human UX. Agents need:
+- Deterministic API responses (no ambiguous UI states)
+- Webhook callbacks for async operations
+- Structured error codes, not human-readable messages
+
+### 🔨 How We Built It
+
+**Tech Stack:**
+- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
+- **Web3**: wagmi v3, viem, custom injected wallet connector
+- **Smart Contracts**: Solidity, Hardhat, OpenZeppelin
+- **State Management**: TanStack Query for server state
+
+**Architecture Decisions:**
+
+1. **Escrow-First Design**: Instead of giving agents direct wallet access, all funds flow through an escrow contract. This provides:
+   - Daily spending limits enforced on-chain
+   - Human override capabilities (pause, withdraw)
+   - Audit trail of all agent transactions
+
+2. **Provider Registry**: Service providers register on-chain with their pricing, enabling agents to discover and compare services programmatically.
+
+3. **SDK-First Approach**: We built the `@agentpay/sdk` package so AI agent frameworks (LangChain, AutoGPT, CrewAI) can integrate payments in ~5 lines of code:
+
+```typescript
+import { AgentPayClient } from '@agentpay/sdk';
+
+const client = new AgentPayClient({ 
+  agentId: 'agent-001',
+  escrowAddress: '0x...' 
+});
+
+await client.payForService('weather-api', 0.001);
+```
+
+4. **Webhook System**: Providers receive real-time payment notifications, enabling instant service delivery upon payment confirmation.
+
+### ⚡ Challenges We Faced
+
+**Challenge 1: Wallet Connection Hell**
+
+We initially used RainbowKit + WalletConnect, but dependency conflicts with Next.js 15 caused build failures. The `@walletconnect/ethereum-provider` package had peer dependency issues with `viem` versions.
+
+*Solution*: Built a custom `ConnectButton` using raw wagmi hooks, supporting only injected wallets (MetaMask, Brave, etc.). Simpler, but rock-solid.
+
+**Challenge 2: Hydration Mismatches**
+
+React 18's strict hydration checking flagged our wallet components because `window.ethereum` doesn't exist on the server.
+
+*Solution*: Implemented a `mounted` state pattern:
+```typescript
+const [mounted, setMounted] = useState(false);
+useEffect(() => setMounted(true), []);
+if (!mounted) return <Skeleton />;
+```
+
+**Challenge 3: Gas Estimation for Agent Transactions**
+
+Agents need predictable costs, but gas prices fluctuate. An agent budgeting $1 for 100 API calls could run out after 50 if gas spikes.
+
+*Solution*: We recommend L2 deployment (Base/Arbitrum) where gas is ~$0.001 per transaction, making costs negligible. Our SDK includes gas estimation helpers:
+
+$$Cost_{total} = Cost_{service} + Gas_{price} \cdot Gas_{limit}$$
+
+**Challenge 4: Trust Without Custody**
+
+How do you let an agent spend money without giving it full wallet access? Our escrow contract solves this:
+- Human deposits funds and sets daily limit
+- Agent can only spend up to the limit per day
+- Human can pause or withdraw at any time
+- All transactions are logged on-chain
+
+**Challenge 5: Multi-Chain State Sync**
+
+When a user switches chains, the entire app state (balances, contracts, transactions) must update. We used wagmi's `useChainId` hook with reactive queries:
+
+```typescript
+const { data: balance } = useBalance({ 
+  address, 
+  chainId, // Reactive to chain changes
+  watch: true 
+});
+```
+
+---
+
 ## 🎯 Overview
 
 AgentPay is a platform that enables AI agents to make autonomous payments for services, APIs, and data using MNEE stablecoin on Ethereum. It provides:
