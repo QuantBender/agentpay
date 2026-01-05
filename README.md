@@ -72,24 +72,50 @@ Get a WalletConnect Project ID at [https://cloud.walletconnect.com](https://clou
 
 \`\`\`
 agentpay/
+├── public/                     # Static assets
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
 ├── src/
 │   ├── app/                    # Next.js App Router pages
+│   │   ├── layout.tsx         # Root layout with providers
 │   │   ├── page.tsx           # Home/Dashboard
-│   │   ├── agents/            # Agent management
-│   │   ├── marketplace/       # Service marketplace
-│   │   └── provider/          # Service provider registration
+│   │   ├── globals.css        # Global styles & Tailwind
+│   │   ├── favicon.ico        # App favicon
+│   │   ├── agents/
+│   │   │   └── page.tsx       # Agent management page
+│   │   ├── marketplace/
+│   │   │   └── page.tsx       # Service marketplace page
+│   │   └── provider/
+│   │       └── page.tsx       # Service provider registration
 │   ├── components/
-│   │   ├── layout/            # Header, Footer
-│   │   └── providers/         # Web3Provider (wagmi, rainbowkit)
+│   │   ├── layout/
+│   │   │   ├── Header.tsx     # Navigation header with mobile menu
+│   │   │   └── Footer.tsx     # Site footer
+│   │   ├── providers/
+│   │   │   └── Web3Provider.tsx  # wagmi & QueryClient provider
+│   │   └── wallet/
+│   │       └── ConnectButton.tsx # Custom wallet connect button
 │   ├── config/
-│   │   └── wagmi.ts           # Wagmi configuration
+│   │   └── wagmi.ts           # Wagmi configuration (injected connector)
 │   ├── contracts/
 │   │   ├── AgentPayEscrow.sol # Solidity escrow contract
 │   │   ├── mnee-abi.ts        # MNEE ERC-20 ABI
 │   │   └── escrow-abi.ts      # Escrow contract ABI
 │   └── hooks/
-│       ├── useMnee.ts         # MNEE token hooks
-│       └── useAgentPay.ts     # Escrow contract hooks
+│       ├── useMnee.ts         # MNEE token hooks (balance, approve, transfer)
+│       └── useAgentPay.ts     # Escrow contract hooks (create, fund, execute)
+├── .env.example               # Environment variables template
+├── .gitignore                 # Git ignore rules
+├── eslint.config.mjs          # ESLint configuration
+├── next.config.ts             # Next.js configuration
+├── next-env.d.ts              # Next.js TypeScript declarations
+├── package.json               # Dependencies and scripts
+├── postcss.config.mjs         # PostCSS configuration
+├── tsconfig.json              # TypeScript configuration
+└── README.md                  # Project documentation
 \`\`\`
 
 ## 🔐 Smart Contracts
@@ -137,9 +163,9 @@ The escrow contract (\`src/contracts/AgentPayEscrow.sol\`) handles:
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14, React 19, TypeScript
+- **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS
-- **Web3**: wagmi, viem, RainbowKit
+- **Web3**: wagmi, viem (with injected wallet connector)
 - **Blockchain**: Ethereum, MNEE Stablecoin
 - **Smart Contracts**: Solidity 0.8.20, OpenZeppelin
 
