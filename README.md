@@ -3,7 +3,31 @@
 <div align="center">
   <h3>🤖 Enable AI agents to transact autonomously using MNEE stablecoin</h3>
   <p>Built for the MNEE Hackathon: Programmable Money for Agents, Commerce, and Automated Finance</p>
+  
+  <br />
+  
+  <a href="https://agentpay-three.vercel.app">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-agentpay--three.vercel.app-emerald?style=for-the-badge" alt="Live Demo" />
+  </a>
+  <a href="https://github.com/QuantBender/agentpay">
+    <img src="https://img.shields.io/badge/GitHub-Source_Code-black?style=for-the-badge&logo=github" alt="GitHub" />
+  </a>
 </div>
+
+---
+
+## 🌐 Live Demo
+
+**👉 [https://agentpay-three.vercel.app](https://agentpay-three.vercel.app)**
+
+Try the live demo to explore:
+- 🏠 **Home** - Platform overview and value proposition
+- 🤖 **Agents** - Create and manage AI agent wallets
+- 🛒 **Marketplace** - Browse AI-accessible services
+- 🏢 **Provider** - Register as a service provider
+- 📊 **Analytics** - View transaction analytics dashboard
+
+> **Note**: Connect a Web3 wallet (MetaMask) to interact with blockchain features.
 
 ---
 

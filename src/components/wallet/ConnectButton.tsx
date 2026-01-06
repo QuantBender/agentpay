@@ -4,6 +4,13 @@ import { useAccount, useConnect, useDisconnect, useEnsName, useBalance } from 'w
 import { useState, useEffect } from 'react';
 import { formatUnits } from 'viem';
 
+// Extend Window interface for ethereum provider
+declare global {
+  interface Window {
+    ethereum?: Record<string, unknown>;
+  }
+}
+
 export function ConnectButton() {
   const { address, isConnected, connector } = useAccount();
   const { connect, connectors, isPending, error } = useConnect();
@@ -21,7 +28,7 @@ export function ConnectButton() {
 
   // Check if we're in an environment with no wallet
   const hasWallet = typeof window !== 'undefined' && (
-    window.ethereum !== undefined || 
+    typeof window.ethereum !== 'undefined' || 
     connectors.some(c => c.ready !== false)
   );
 
